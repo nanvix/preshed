@@ -17,3 +17,4 @@ cythonize.json
 MANIFEST
 build/
 dist/
+*.o
