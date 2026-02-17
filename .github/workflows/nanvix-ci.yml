@@ -120,6 +120,10 @@ jobs:
         run: |
           make -f Makefile.nanvix CONFIG_NANVIX=y NANVIX_HOME="$NANVIX_HOME" NANVIX_TOOLCHAIN="/opt/nanvix" CYMEM_DIR="$(pwd)/cymem-src" MURMURHASH_DIR="$(pwd)/murmurhash-src" all
 
+      - name: Test
+        run: |
+          make -f Makefile.nanvix CONFIG_NANVIX=y NANVIX_HOME="$NANVIX_HOME" NANVIX_TOOLCHAIN="/opt/nanvix" test
+
       - name: Package Artifacts
         run: |
           set -euo pipefail

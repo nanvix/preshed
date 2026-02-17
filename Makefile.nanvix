@@ -98,4 +98,11 @@ install: $(STATICLIB)
 clean:
 	rm -f *.o $(STATICLIB)
 
-.PHONY: all clean install
+test: $(STATICLIB)
+	@echo "Running preshed tests..."
+	@test -f $(STATICLIB) && echo "  OK: $(STATICLIB) exists" || (echo "  FAIL: $(STATICLIB) not found" && exit 1)
+	@$(NANVIX_TOOLCHAIN)/bin/i686-nanvix-ar -t $(STATICLIB) | grep -q maps.o && echo "  OK: maps.o in archive" || (echo "  FAIL: maps.o not in archive" && exit 1)
+	@$(NANVIX_TOOLCHAIN)/bin/i686-nanvix-nm $(STATICLIB) | grep -q PyInit_maps && echo "  OK: PyInit_maps symbol found" || (echo "  FAIL: PyInit_maps not found" && exit 1)
+	@echo "\t\t*** preshed tests PASSED ***"
+
+.PHONY: all clean install test
